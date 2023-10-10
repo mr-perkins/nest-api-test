@@ -14,18 +14,22 @@ import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
 import { Post as PostEntity } from './post.entity';
 import { PostDto } from './dto/post.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postService: PostsService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get all posts' })
   async findAll() {
     // get all posts in the db
     return await this.postService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get certain post by id' })
   async findOne(@Param('id') id: number): Promise<PostEntity> {
     // find the post with this id
     const post = await this.postService.findOne(id);
@@ -41,6 +45,7 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
+  @ApiOperation({ summary: 'Create new post' })
   async create(@Body() post: PostDto, @Request() req): Promise<PostEntity> {
     // create a new post and return the newly created post
     return await this.postService.create(post, req.user.id);
@@ -48,6 +53,7 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
+  @ApiOperation({ summary: 'Update post by id' })
   async update(
     @Param('id') id: number,
     @Body() post: PostDto,
@@ -72,6 +78,7 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete post by id' })
   async remove(@Param('id') id: number, @Request() req) {
     // delete the post with this id
     const deleted = await this.postService.delete(id, req.user.id);

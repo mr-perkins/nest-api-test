@@ -10,7 +10,11 @@ async function bootstrap() {
   // app.useGlobalPipes(new ValidateInputPipe());
   app.useGlobalPipes(new ValidationPipe());
 
-  const config = new DocumentBuilder().build();
+  const config = new DocumentBuilder()
+    .setTitle('Nest Api')
+    .setDescription('Nest api test application')
+    .setVersion('1.0')
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
