@@ -9,7 +9,7 @@ export class DoesUserExist implements CanActivate {
     canActivate(
       context: ExecutionContext,
     ): boolean | Promise<boolean> | Observable<boolean> {
-        const request = context.switchToHttp().getRequest();
+        const request = context.switchToHttp().getRequest() as Request;
         return this.validateRequest(request);
     }
 
