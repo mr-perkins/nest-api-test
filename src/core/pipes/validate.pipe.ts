@@ -1,3 +1,4 @@
+//this is not working, using default nest validation pipe from @nestjs/common fix all the problems and working just fine
 import {
   Injectable,
   ArgumentMetadata,
@@ -19,6 +20,6 @@ export class ValidateInputPipe extends ValidationPipe {
   }
 
   private handleError(errors) {
-    return errors.map((error) => error.constraints);
+    return errors.map(error => error.constraints);
   }
 }
